@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F6FDFF"
+    tools:context=".UI.Detail.DetailFragment">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="30dp">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="310dp">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/img_item_photo"
+                android:layout_width="350dp"
+                android:layout_height="290dp"
+                android:scaleType="centerCrop"
+                app:riv_corner_radius="15dp"
+                style="@style/ShapeAppearance.App.SmallComponent"
+                tools:src="@tools:sample/backgrounds/scenic" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <RatingBar
+                    android:id="@+id/rating_bar"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="80dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="bottom"
+                    android:numStars="5"
+                    android:progressTint="#FFC107"
+                    android:rating="3.5"
+                    android:stepSize="0.5"
+                    android:transformPivotX="0dp" />
+
+                <TextView
+                    android:id="@+id/tv_nama_Destinasi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="nama destinasi"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/tv_lokasi_destinasi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:paddingBottom="40dp"
+                    android:text="lokasi destinasi"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/back_button"
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:layout_gravity="start"
+                android:layout_margin="16dp"
+                android:src="@drawable/back_button" />
+
+            <LinearLayout
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom"
+                    android:backgroundTint="@color/white"
+                    android:drawableLeft="@drawable/ic_baseline_location_on_14"
+                    android:drawableTint="#1886EA"
+                    android:text="Maps"
+                    android:textColor="#1886EA"
+                    android:textSize="12sp"
+                    app:cornerRadius="25dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="10dp"
+
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom"
+                    android:backgroundTint="@color/white"
+                    android:drawableLeft="@drawable/love_button"
+                    android:text="Favorite"
+                    android:textColor="#EA1818"
+                    android:textSize="12sp"
+                    app:cornerRadius="25dp" />
+
+            </LinearLayout>
+
+
+        </FrameLayout>
+
+
+        <RadioGroup
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="120dp"
+                android:layout_height="47dp"
+                android:text="Deskripsi"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:translationZ="2dp"
+                android:translationX="-10dp"
+                android:textSize="12sp"
+                app:cornerRadius="80dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_nav_peraturan"
+                android:layout_width="135dp"
+                android:layout_height="46.5dp"
+                android:layout_marginStart="-30dp"
+                android:backgroundTint="@color/white"
+                android:text="Peraturan"
+                android:textAlignment="center"
+                android:textColor="#68BFD1"
+                android:textSize="12sp"
+                android:translationX="2dp"
+                android:outlineSpotShadowColor="@color/white"
+                android:translationZ="1dp"
+                app:cornerRadius="80dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_nav_review"
+                android:layout_width="125dp"
+                android:layout_height="46.5dp"
+                android:layout_marginStart="-30dp"
+                android:backgroundTint="@color/white"
+                android:text="Review"
+                android:outlineSpotShadowColor="@color/white"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#68BFD1"
+                android:translationX="8dp"
+                android:textSize="12sp"
+                app:cornerRadius="80dp" />
+
+        </RadioGroup>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:cardCornerRadius="15dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:id="@+id/tv_namaDestinasi2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Nama Destinasi"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Jam Buka : "
+                        android:textColor="#68BFD1" />
+
+                    <TextView
+                        android:id="@+id/tv_jam_buka"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00 - 23:59"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" WIB"
+                        android:textColor="@color/black" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_deskripsi_destinasi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="deskripsi destinasi"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</ScrollView>
