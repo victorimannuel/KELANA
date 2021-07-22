@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_bottomsheet"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:paddingLeft="16dp"
+    android:paddingTop="16dp"
     tools:context=".UI.BottomSheet.BottomSheetNewsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
 
         <Button
             android:id="@+id/btn_closeSheet"
@@ -26,19 +26,36 @@
             android:id="@+id/tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/poppins_semibold"
             android:paddingTop="16dp"
+            android:paddingLeft="16dp"
             android:text="3 Paling Populer"
             android:textColor="#5BA5B5"
             android:textSize="14sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_Top3News"
+            android:paddingLeft="8dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             tools:listitem="@layout/item_row_kategori"/>
+
+        <View
+            android:layout_width="335dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:background="@color/white" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_SecondaryNews"
+            android:paddingLeft="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:listitem="@layout/item_row_secondarynews"/>
 
     </LinearLayout>
 

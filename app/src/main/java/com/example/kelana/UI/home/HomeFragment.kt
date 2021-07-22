@@ -1,6 +1,7 @@
 package com.example.kelana.UI.home
 
 import android.Manifest
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -19,6 +20,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kelana.Activity.DetailActivity
 import com.example.kelana.Adapter.ListDestinasiAdapter
 import com.example.kelana.Adapter.ListKategoriAdapter
 import com.example.kelana.Data.KategoriData
@@ -42,9 +44,12 @@ import java.io.IOException
 import java.lang.StringBuilder
 import java.util.*
 import kotlin.collections.ArrayList
+import com.google.maps.android.SphericalUtil
+import com.google.android.gms.maps.model.LatLng;
 
 
-class HomeFragment : Fragment() , ListKategoriAdapter.IUDestinasiRecyler{
+class HomeFragment : Fragment(), ListKategoriAdapter.IUDestinasiRecyler,
+    ListDestinasiAdapter.IUDestinasi {
 
     private lateinit var tvUserLocation: TextView
     private lateinit var etSearchBar: TextInputLayout
@@ -81,15 +86,15 @@ class HomeFragment : Fragment() , ListKategoriAdapter.IUDestinasiRecyler{
 
         btnsheet = view.findViewById(R.id.btn_openSheet)
 
-        val bottomsheetnews  = BottomSheetNewsFragment()
-        btnsheet.setOnClickListener{
-            fragmentManager?.let { it1 -> bottomsheetnews.show(it1,"BottomSheet Showing") }
+        val bottomsheetnews = BottomSheetNewsFragment()
+        btnsheet.setOnClickListener {
+            fragmentManager?.let { it1 -> bottomsheetnews.show(it1, "BottomSheet Showing") }
         }
 
 
         btnCustomerService = view.findViewById(R.id.btn_callCS)
         btnCustomerService.setOnClickListener {
-
+            CallCS()
         }
 
         tvUserLocation = view.findViewById(R.id.tv_location)
@@ -100,8 +105,6 @@ class HomeFragment : Fragment() , ListKategoriAdapter.IUDestinasiRecyler{
 
         rvKategori = view.findViewById(R.id.rv_kategori)
         rvKategori.setHasFixedSize(true)
-
-        LoadData()
 
         list2.addAll(KategoriData.listData)
 
@@ -114,6 +117,8 @@ class HomeFragment : Fragment() , ListKategoriAdapter.IUDestinasiRecyler{
                     tvUserLocation.visibility = View.GONE
                     initLocation()
                     ShowAddress()
+
+                    println("User Location, lat : $lat & long : $lng")
                 }
 
                 override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
@@ -129,19 +134,34 @@ class HomeFragment : Fragment() , ListKategoriAdapter.IUDestinasiRecyler{
                 }
 
             }).check()
+
+    }
+
+    private fun CallCS() {
+        val intent = Intent()
+        intent.action = Intent.ACTION_SEND
+        intent.putExtra("address", "081334520958")
+        intent.putExtra(Intent.EXTRA_TEXT, "Saya Ingin Berkonsultasi")
+        intent.type = "text/plain"
+
+        startActivity(Intent.createChooser(intent, "Please Select app :"))
     }
 
     override fun ToKategoriTerpilih(Kategori: String) {
         super.ToKategoriTerpilih(Kategori)
         val bottomSheetPerKategori = BottomSheetKategoriFragment()
-        fragmentManager?.let { it1 -> bottomSheetPerKategori.show(it1,Kategori) }
+        fragmentManager?.let { it1 -> bottomSheetPerKategori.show(it1, Kategori) }
     }
 
-    private fun LoadData() {
+    private fun LoadData(lat: Double, lng: Double) {
 
         val locationUser = Location("")
         locationUser.latitude = lat
         locationUser.longitude = lng
+
+
+
+        println("User Location : $locationUser")
 
         rfbaseDestinasi = FirebaseFirestore.getInstance()
         rfbaseDestinasi.collection("destinasi").addSnapshotListener { data, error ->
@@ -150,11 +170,31 @@ class HomeFragment : Fragment() , ListKategoriAdapter.IUDestinasiRecyler{
                 return@addSnapshotListener
             }
 
+
             for (dc: DocumentChange in data?.documentChanges!!) {
 
                 if (dc.type == DocumentChange.Type.ADDED) {
+                    val locationDestinasi = Location("")
 
-                    DestinasiArrayList.add(dc.document.toObject(Destinasi::class.java))
+                    val latDestinasi = dc.document.getString("latitude")
+                    val lngDestinasi = dc.document.getString("longitude")
+
+                    locationDestinasi.longitude = lngDestinasi?.toDouble() ?: 0.0
+                    locationDestinasi.latitude = latDestinasi?.toDouble() ?: 0.0
+
+                    println("Lokasi Destinasi ${dc.document.getString("nama")} : $locationDestinasi")
+                    val distance = locationUser.distanceTo(locationDestinasi) / 1000
+                    val loc1 = LatLng(lat,lng)
+
+                    val loc2 = LatLng(latDestinasi?.toDouble() ?: 0.0,lngDestinasi?.toDouble() ?: 0.0)
+
+                    val test = SphericalUtil.computeDistanceBetween(loc1, loc2)
+                    println("Distance between user and location : $distance")
+                    println("Distance between user and location with spherical : $test")
+
+                    if (distance < 100) {
+                        DestinasiArrayList.add(dc.document.toObject(Destinasi::class.java))
+                    }
                 }
             }
             DestinasiAdapter.notifyDataSetChanged()
@@ -163,7 +203,7 @@ class HomeFragment : Fragment() , ListKategoriAdapter.IUDestinasiRecyler{
 
         rvDestinasi.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        DestinasiAdapter = ListDestinasiAdapter(DestinasiArrayList)
+        DestinasiAdapter = ListDestinasiAdapter(DestinasiArrayList, this)
         rvDestinasi.adapter = DestinasiAdapter
 
         DestinasiAdapter.setOnItemClickCallback(object : ListDestinasiAdapter.OnItemClickCallback {
@@ -171,22 +211,20 @@ class HomeFragment : Fragment() , ListKategoriAdapter.IUDestinasiRecyler{
                 list2.clear()
             }
         })
+    }
 
-//        val queue =
-//            FirebaseFirestore.getInstance().collection("destinasi").document("8sz6633qe0BTzwRKaJnv")
-//        queue.get().addOnSuccessListener { document ->
-//            val temp = document.getString("nama")
-//            println("nama destinasi pilihan : $temp")
-//        }
-
-
+    override fun ToDetail(idDestinasi: String) {
+        super.ToDetail(idDestinasi)
+        val intent = Intent(context, DetailActivity::class.java)
+        intent.putExtra(DetailActivity.idDestinasi, idDestinasi)
+        startActivity(intent)
     }
 
     private fun showRecyclerList() {
 
         rvKategori.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        val listKategoriAdapter = ListKategoriAdapter(list2,this)
+        val listKategoriAdapter = ListKategoriAdapter(list2, this)
         rvKategori.adapter = listKategoriAdapter
 
     }
@@ -257,6 +295,8 @@ class HomeFragment : Fragment() , ListKategoriAdapter.IUDestinasiRecyler{
                             lat = Adress[0].latitude
                             lng = Adress[0].longitude
 
+                            LoadData(lat, lng)
+
                             val Coordinate = StringBuilder()
                                 .append(lat)
                                 .append("/")
@@ -311,23 +351,8 @@ class HomeFragment : Fragment() , ListKategoriAdapter.IUDestinasiRecyler{
         super.onResume()
     }
 
-    private fun showSelectedHero(photo: Destinasi) {
-//        Toast.makeText(this, "Kamu memilih " + photo.title, Toast.LENGTH_SHORT).show()
-    }
-
-
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        setMode(item.itemId)
         return super.onOptionsItemSelected(item)
     }
 
-    private fun setMode(selectedMode: Int) {
-        when (selectedMode) {
-//            R.id.action_settings -> {
-//                val intent = Intent(this, AboutActivity::class.java)
-//                startActivity(intent)
-//            }
-        }
-    }
 }

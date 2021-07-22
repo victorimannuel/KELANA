@@ -1,20 +1,18 @@
 package com.example.kelana.UI.BottomSheet
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kelana.Adapter.ListDestinasiAdapter
+import com.example.kelana.Activity.DetailActivity
 import com.example.kelana.Adapter.ListDestinasiKategoriAdapter
 import com.example.kelana.Model.Destinasi
 import com.example.kelana.R
-import com.example.kelana.UI.Detail.DetailFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
@@ -50,8 +48,6 @@ class BottomSheetKategoriFragment : BottomSheetDialogFragment() , ListDestinasiK
         tv1.setOnClickListener {
 
         }
-
-
         loadData()
     }
 
@@ -77,7 +73,7 @@ class BottomSheetKategoriFragment : BottomSheetDialogFragment() , ListDestinasiK
 
             }
         rv_Destinasi.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         DestinasiAdapter = ListDestinasiKategoriAdapter(DestinasiArrayList,this)
         rv_Destinasi.adapter = DestinasiAdapter
     }
@@ -85,16 +81,20 @@ class BottomSheetKategoriFragment : BottomSheetDialogFragment() , ListDestinasiK
     override fun ToDestinasiTerpilih(id: String) {
         super.ToDestinasiTerpilih(id)
 
-        val toDetail = DetailFragment()
-        toDetail.id = id
+        val intent = Intent(context, DetailActivity::class.java)
+        intent.putExtra(DetailActivity.idDestinasi, id)
+        startActivity(intent)
 
-        val mFragmentManager = fragmentManager
-        mFragmentManager?.beginTransaction()?.apply {
-
-            replace(R.id.fragmentHomeContainerView,toDetail,DetailFragment::class.java.simpleName)
-            addToBackStack(null)
-            commit()
-            dialog?.dismiss()
-        }
+//        val toDetail = DetailFragment()
+//        toDetail.id = id
+//
+//        val mFragmentManager = fragmentManager
+//        mFragmentManager?.beginTransaction()?.apply {
+//
+//            replace(R.id.fragmentHomeContainerView,toDetail,DetailFragment::class.java.simpleName)
+//            addToBackStack(null)
+//            commit()
+//            dialog?.dismiss()
+//        }
     }
 }

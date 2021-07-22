@@ -5,14 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.kelana.Model.Destinasi
 import com.example.kelana.R
-import com.example.kelana.UI.BottomSheet.BottomSheetKategoriFragmentDirections
-import com.example.kelana.UI.home.HomeFragmentDirections
 
 class ListDestinasiKategoriAdapter(
     private val listDestinasi: ArrayList<Destinasi>,
@@ -60,7 +57,6 @@ class ListDestinasiKategoriAdapter(
                 .into(holder.imgPhoto)
         }.setOnClickListener { mView ->
             mListener.ToDestinasiTerpilih(currentdestinasi.id)
-            listDestinasi.clear()
         }
     }
 

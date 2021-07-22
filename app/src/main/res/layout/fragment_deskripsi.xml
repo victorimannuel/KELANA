@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#F6FDFF"
+    tools:context=".UI.Detail.DeskripsiFragment">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="30dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:cardCornerRadius="15dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:id="@+id/tv_namaDestinasi2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Nama Destinasi"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Jam Buka : "
+                        android:textColor="#68BFD1" />
+
+                    <TextView
+                        android:id="@+id/tv_jam_buka"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00 - 23:59"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" WIB"
+                        android:textColor="@color/black" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_deskripsi_destinasi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="\t\t\t\tLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Venenatis urna cursus eget nunc. Imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper. Hendrerit dolor magna eget est lorem ipsum dolor sit. Bibendum neque egestas congue quisque egestas. Id porta nibh venenatis cras sed. Integer enim neque volutpat ac tincidunt vitae semper quis lectus. \n\t\t\t\tPurus gravida quis blandit turpis cursus in hac habitasse platea. Consequat semper viverra nam libero justo laoreet. Et egestas quis ipsum suspendisse ultrices gravida dictum fusce. Integer enim neque volutpat ac tincidunt vitae semper quis lectus. Congue quisque egestas diam in arcu cursus euismod. Lorem ipsum dolor sit amet consectetur adipiscing elit pellentesque. Ornare aenean euismod elementum nisi quis."
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</ScrollView>
