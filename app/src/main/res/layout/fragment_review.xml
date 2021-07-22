@@ -27,7 +27,7 @@
                 android:padding="15dp">
 
                 <TextView
-                    android:id="@+id/tv_deskripsi_destinasi"
+                    android:id="@+id/tv_deskripsi_destinasi1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="16dp"
